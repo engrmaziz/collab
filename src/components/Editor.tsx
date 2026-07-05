@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import { Share2, History, Loader2 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";

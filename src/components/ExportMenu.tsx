@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Download, ChevronDown, Printer } from "lucide-react";
 import { marked } from "marked";
 import { downloadTextFile } from "@/lib/utils";

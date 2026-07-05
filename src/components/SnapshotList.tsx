@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { X, RotateCcw, Eye } from "lucide-react";
 import { DocumentSnapshot } from "@/types";
 import { formatDate } from "@/lib/utils";

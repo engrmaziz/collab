@@ -1,4 +1,3 @@
-import React from "react";
 import { RemoteCursor } from "@/types";
 
 interface Props {

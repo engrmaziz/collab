@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { X, UserMinus } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import { DocumentMember, Profile } from "@/types";
