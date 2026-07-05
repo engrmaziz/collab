@@ -6,13 +6,15 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   if (loading) {
     return (
-      <div className="h-screen w-screen flex items-center justify-center bg-base">
-        <div className="text-muted text-sm">Loading…</div>
+      <div className="h-screen w-screen flex items-center justify-center bg-base text-muted">
+        Loading...
       </div>
     );
   }
 
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
   return <>{children}</>;
 }
