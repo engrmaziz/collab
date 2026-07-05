@@ -37,8 +37,11 @@ export function useDocuments() {
   useEffect(() => {
     if (!user) return;
 
+    // Append Date.now() to force a fresh channel and prevent caching clashes
+    const channelName = `documents-changes-${Date.now()}`;
+    
     const channel = supabase
-      .channel("documents-changes")
+      .channel(channelName)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "documents" },
