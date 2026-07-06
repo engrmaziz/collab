@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FileText, Folder, Plus } from "lucide-react";
 import { Layout } from "@/components/Layout";

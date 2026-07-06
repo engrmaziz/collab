@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ChevronRight, ChevronDown, FileText, Folder, Plus, Trash2 } from "lucide-react";
 import { Doc } from "@/types";
