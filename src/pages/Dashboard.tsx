@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FileText, Folder, Plus } from "lucide-react";
 import { Layout } from "@/components/Layout";
@@ -40,7 +41,7 @@ export function Dashboard() {
               <button
                 key={doc.id}
                 onClick={() => doc.type === "document" && navigate(`/doc/${doc.id}`)}
-                className="card p-4 text-left hover:border-white/20 transition-colors duration-150"
+                className="card p-4 text-left hover:border-accent transition-colors duration-150"
               >
                 <div className="flex items-center gap-2 mb-3 text-accent">
                   {doc.type === "folder" ? <Folder size={18} /> : <FileText size={18} />}

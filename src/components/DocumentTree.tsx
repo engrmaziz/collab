@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ChevronRight, ChevronDown, FileText, Folder, Plus, Trash2 } from "lucide-react";
 import { Doc } from "@/types";
@@ -41,7 +41,7 @@ export function DocumentTree({ docs, onCreate, onDelete }: Props) {
           <button
             title="New document"
             onClick={() => onCreate("document", null)}
-            className="p-1 rounded hover:bg-white/5 text-muted hover:text-text transition-colors"
+            className="p-1 rounded hover:bg-surface text-muted hover:text-text transition-colors"
           >
             <Plus size={14} />
           </button>
@@ -76,7 +76,7 @@ function TreeItem({
       <div
         className={cn(
           "group flex items-center gap-1 px-2 py-1 rounded-md cursor-pointer text-sm transition-colors duration-150",
-          isActive ? "bg-accent/15 text-text" : "text-muted hover:bg-white/5 hover:text-text"
+          isActive ? "bg-accent/15 text-text" : "text-muted hover:bg-surface hover:text-text"
         )}
         style={{ paddingLeft: 8 + depth * 14 }}
         onClick={() => {
@@ -103,7 +103,7 @@ function TreeItem({
                 e.stopPropagation();
                 onCreate("document", node.id);
               }}
-              className="p-0.5 rounded hover:bg-white/10"
+              className="p-0.5 rounded hover:bg-surface"
             >
               <Plus size={12} />
             </button>
@@ -114,7 +114,7 @@ function TreeItem({
               e.stopPropagation();
               onDelete(node.id);
             }}
-            className="p-0.5 rounded hover:bg-white/10"
+            className="p-0.5 rounded hover:bg-surface text-red-500/70 hover:text-red-500"
           >
             <Trash2 size={12} />
           </button>

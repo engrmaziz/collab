@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import { Share2, History, Loader2 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
@@ -30,6 +30,9 @@ export function Editor({ documentId }: Props) {
   const [shareOpen, setShareOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const isRemoteUpdate = useRef(false);
+  
+  // Track theme for MDEditor
+  const [colorMode, setColorMode] = useState<"light" | "dark">("dark");
 
   const handleRemoteContent = useCallback((remoteContent: string) => {
     isRemoteUpdate.current = true;
@@ -54,7 +57,18 @@ export function Editor({ documentId }: Props) {
       setContent(doc.content ?? "");
       setTitleDraft(doc.title ?? "");
     }
-  }, [doc?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [doc?.id]);
+
+  // Watch for theme changes so the markdown editor matches the app
+  useEffect(() => {
+    const checkTheme = () => {
+      setColorMode(document.documentElement.classList.contains("dark") ? "dark" : "light");
+    };
+    checkTheme();
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
 
   const debouncedBroadcast = useDebouncedCallback((value: string) => {
     broadcastContent(value);
@@ -146,7 +160,7 @@ export function Editor({ documentId }: Props) {
           value={titleDraft}
           onChange={(e) => setTitleDraft(e.target.value)}
           onBlur={handleTitleBlur}
-          className="bg-transparent text-lg font-semibold outline-none focus:underline decoration-white/20 underline-offset-4"
+          className="bg-transparent text-lg font-semibold outline-none focus:underline decoration-border underline-offset-4"
         />
         <div className="flex items-center gap-2">
           <span className="text-xs text-muted flex items-center gap-1 mr-2">
@@ -172,7 +186,7 @@ export function Editor({ documentId }: Props) {
 
       <div
         className="flex-1 min-h-0 overflow-auto"
-        data-color-mode="dark"
+        data-color-mode={colorMode}
         onPaste={handlePaste}
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
