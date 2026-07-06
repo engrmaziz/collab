@@ -1716,6 +1716,7 @@ flowchart LR
     G --> H["▲ Vercel"]
     H --> I["🌍 Production"]
 ```
+
 Pipeline stages:
 
 - Install dependencies
