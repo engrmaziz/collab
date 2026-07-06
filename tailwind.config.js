@@ -8,11 +8,13 @@ export default {
         sans: ["Inter", "system-ui", "sans-serif"],
       },
       colors: {
-        base: "#0f172a",
-        card: "#1e293b",
-        text: "#f8fafc",
-        muted: "#334155",
-        accent: "#3b82f6",
+        base: "var(--color-base)",
+        card: "var(--color-card)",
+        text: "var(--color-text)",
+        muted: "var(--color-muted)",
+        accent: "var(--color-accent)",
+        border: "var(--color-border)",
+        surface: "var(--color-surface)",
       },
       transitionDuration: {
         DEFAULT: "150ms",

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { LogOut, LayoutGrid, FolderPlus } from "lucide-react";
+import { useState, useEffect } from "react";
+import { LogOut, LayoutGrid, FolderPlus, Sun, Moon } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useDocuments } from "@/hooks/useDocuments";
 import { DocumentTree } from "./DocumentTree";
@@ -9,6 +10,26 @@ export function Sidebar() {
   const { user, signOut } = useAuth();
   const { docs, createDocument, deleteDocument } = useDocuments();
   const navigate = useNavigate();
+
+  // Theme state
+  const [isDark, setIsDark] = useState(true);
+
+  // Sync state with DOM on mount
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains("dark"));
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = !isDark;
+    setIsDark(nextTheme);
+    if (nextTheme) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  };
 
   const handleCreate = async (type: "document" | "folder", parentId: string | null) => {
     const title = type === "folder" ? "New folder" : "Untitled";
@@ -25,8 +46,8 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="w-[240px] shrink-0 h-full bg-base border-r border-white/10 flex flex-col">
-      <div className="h-14 flex items-center px-4 border-b border-white/10">
+    <aside className="w-[240px] shrink-0 h-full bg-base border-r border-border flex flex-col">
+      <div className="h-14 flex items-center px-4 border-b border-border">
         <span className="font-semibold text-text tracking-tight">CollabMD</span>
       </div>
 
@@ -50,12 +71,27 @@ export function Sidebar() {
         <DocumentTree docs={docs} onCreate={handleCreate} onDelete={handleDelete} />
       </div>
 
-      <div className="border-t border-white/10 p-3 flex items-center gap-2">
-        <div className="w-7 h-7 rounded-full bg-accent/20 text-accent flex items-center justify-center text-xs font-medium">
+      <div className="border-t border-border p-3 flex items-center gap-2">
+        <div className="w-7 h-7 rounded-full bg-accent/10 text-accent flex items-center justify-center text-xs font-medium">
           {user?.email ? initialsFromEmail(user.email) : "?"}
         </div>
         <span className="text-xs text-muted truncate flex-1">{user?.email}</span>
-        <button title="Sign out" onClick={signOut} className="p-1 rounded hover:bg-white/5 text-muted hover:text-text">
+        
+        {/* Theme Toggle Button */}
+        <button 
+          title="Toggle Theme" 
+          onClick={toggleTheme} 
+          className="p-1.5 rounded hover:bg-surface text-muted hover:text-text transition-colors"
+        >
+          {isDark ? <Sun size={14} /> : <Moon size={14} />}
+        </button>
+
+        {/* Logout Button */}
+        <button 
+          title="Sign out" 
+          onClick={signOut} 
+          className="p-1.5 rounded hover:bg-surface text-muted hover:text-text transition-colors"
+        >
           <LogOut size={14} />
         </button>
       </div>
